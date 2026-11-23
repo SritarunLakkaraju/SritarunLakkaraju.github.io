@@ -8,6 +8,21 @@
 @import url("./tokens.css");
 @import url("./base.css");
 
+/* ---------- motion: smooth in-page jumps, a drawn underline on hover, a press on click ---------- */
+html { scroll-behavior: smooth; }
+.nav ul a, .mast a { position: relative; display: inline-block; text-decoration: none; }
+.nav ul a::after, .mast a::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: calc(-1 * var(--space-2xs)); height: 2px;
+  background: var(--color-field-accent); transform: scaleX(0); transform-origin: left;
+  transition: transform var(--dur-short) var(--ease-out);
+}
+.nav ul a:hover::after, .mast a:hover::after, .nav ul a:focus-visible::after, .mast a:focus-visible::after { transform: scaleX(1); }
+.nav ul a, .mast a, a.button, .textlink, .resume-list a { transition: color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.nav ul a:active, .mast a:active, .textlink:active, .resume-list a:active { transform: translateY(1px); }
+a.button:active { transform: scale(0.97); }
+.resume-list a:hover { transform: translateX(var(--space-xs)); }
+.resume-list a:hover:active { transform: translateX(var(--space-xs)) translateY(1px); }
+
 /* ---------- chrome ---------- */
 .field { background: var(--color-field); color: var(--color-field-ink); }
 .field a { color: var(--color-field-ink); }
@@ -15,9 +30,7 @@
 .nav .container { display: flex; align-items: center; justify-content: space-between; gap: var(--space-lg); padding-block: var(--space-lg); }
 .wordmark { font-family: var(--font-display); font-size: var(--text-lg); text-decoration: none; white-space: nowrap; }
 .nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: var(--space-lg); }
-.nav ul a { text-decoration: none; color: var(--color-field-muted); font-size: var(--text-sm); white-space: nowrap; transition: color var(--dur-short) var(--ease-out); }
-.nav ul a:hover { color: var(--color-field-ink); }
-.nav ul a:active { color: var(--color-field-accent); }
+.nav ul a { color: var(--color-field-ink); font-size: var(--text-sm); white-space: nowrap; }
 
 /* ---------- hero: Stage ---------- */
 .hero .container {
@@ -30,11 +43,11 @@
 .field a.button, a.button {
   display: inline-flex; align-items: center; min-height: 48px; padding-inline: var(--space-lg); border-radius: var(--radius-pill);
   background: var(--color-accent); color: var(--color-accent-ink); font-weight: 700; text-decoration: none; white-space: nowrap;
-  transition: background-color var(--dur-micro) var(--ease-out);
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
 }
 .button:hover { background: var(--color-field-accent); }
 .button:active { background: var(--color-focus); }
-.textlink { font-weight: 700; text-underline-offset: 0.25em; white-space: nowrap; transition: color var(--dur-micro) var(--ease-out); }
+.textlink { font-weight: 700; text-underline-offset: 0.25em; white-space: nowrap; display: inline-block; }
 .textlink:hover { color: var(--color-accent-text); }
 .field .textlink:hover { color: var(--color-field-accent); }
 .textlink:active { color: var(--color-focus); }
@@ -109,9 +122,7 @@ th:last-child { text-align: right; }
 .close .head h2 + .lead { color: var(--color-field-muted); margin-top: var(--space-md); }
 .resume-list { grid-column: 7 / span 6; list-style: none; margin: 0; padding: 0; border-top: var(--rule-hair) solid var(--color-field-rule); }
 .resume-list li { border-bottom: var(--rule-hair) solid var(--color-field-rule); }
-.resume-list a { display: flex; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-md); text-decoration: none; font-size: var(--text-lg); transition: color var(--dur-micro) var(--ease-out); }
-.resume-list a:hover { color: var(--color-field-accent); }
-.resume-list a:active { color: var(--color-focus); }
+.resume-list a { display: flex; justify-content: space-between; gap: var(--space-md); padding-block: var(--space-md); text-decoration: none; font-size: var(--text-lg); }
 .resume-list small { font-size: var(--text-sm); color: var(--color-field-muted); align-self: center; }
 .contact { grid-column: 7 / span 6; display: grid; gap: var(--space-xs); margin-top: var(--space-xl); }
 .contact p { color: var(--color-field-muted); font-size: var(--text-sm); }
@@ -121,9 +132,7 @@ th:last-child { text-align: right; }
 .mast .container { padding-block: var(--space-2xl) var(--space-xl); border-top: var(--rule-hair) solid var(--color-field-rule); display: grid; gap: var(--space-lg); }
 .mast .name { font-family: var(--font-display); font-size: var(--text-section); line-height: 1; }
 .mast ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--space-lg); }
-.mast a { color: var(--color-field-muted); font-size: var(--text-sm); white-space: nowrap; }
-.mast a:hover { color: var(--color-field-ink); }
-.mast a:active { color: var(--color-field-accent); }
+.mast a { color: var(--color-field-ink); font-size: var(--text-sm); white-space: nowrap; }
 .mast p { color: var(--color-field-muted); font-size: var(--text-sm); }
 
 /* ---------- under 60rem everything stacks in reading order ---------- */
