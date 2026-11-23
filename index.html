@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sritarun Lakkaraju</title>
+<meta name="description" content="Sritarun Lakkaraju builds AI agents and full-stack apps, each one scored against labelled data.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Manrope:wght@400;700&family=JetBrains+Mono:wght@400&display=swap">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="field">
+  <nav class="nav" aria-label="Main">
+    <div class="container">
+      <a class="wordmark" href="#top" aria-label="Sritarun Lakkaraju, home">Sritarun Lakkaraju</a>
+      <ul>
+        <li><a href="#work">Work</a></li>
+        <li><a href="#resumes">Resumes</a></li>
+        <li class="optional"><a href="https://github.com/SritarunLakkaraju" target="_blank" rel="noopener">GitHub</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="hero" id="top">
+    <div class="container">
+      <div>
+        <h1>Agents that cite, apps that reconcile.</h1>
+        <p class="lead">M.Tech AI student at Mahindra University. Open to AI and full-stack roles.</p>
+        <div class="actions">
+          <a class="button" href="mailto:lakkarajusri17@gmail.com">Email me</a>
+          <a class="textlink" href="#resumes">Download a resume</a>
+        </div>
+      </div>
+      <figure class="shot">
+        <div data-slot="hero" data-kind="product" data-alt="LedgerLock dashboard after a reconciliation run" style="aspect-ratio: 1160 / 780">
+          <img src="demos/ledgerlock.webp" width="1160" height="780" fetchpriority="high" alt="LedgerLock dashboard: 300 orders reconciled, 96.9% auto-matched, 12 flagged, 0 false matches, precision and recall 100%.">
+        </div>
+        <figcaption>LedgerLock, run locally on synthetic data. Zero false matches.</figcaption>
+      </figure>
+    </div>
+  </div>
+</header>
+
+<main id="work">
+
+  <section class="page" aria-labelledby="rag-title">
+    <div class="container grid split">
+      <div class="text">
+        <div class="head">
+          <h2 id="rag-title">Answers that cite the rulebook</h2>
+          <p class="lead">A Google ADK agent over 225 regulation documents. It cites a source or says it found nothing.</p>
+        </div>
+        <dl class="facts">
+          <div><dt>answer accuracy</dt><dd>98.3%</dd></div>
+          <div><dt>answers correctly cited</dt><dd>99.7%</dd></div>
+        </dl>
+        <a class="textlink" href="https://github.com/SritarunLakkaraju/agentic-rag-adk" target="_blank" rel="noopener">Read the agentic-rag-adk code</a>
+      </div>
+      <figure class="shot">
+        <div data-slot="rag" data-kind="product" data-alt="The regulations assistant answering a question with a citation" style="aspect-ratio: 820 / 370">
+          <img src="demos/rag.webp" width="820" height="370" loading="lazy" alt="The assistant answers that Mechanical Engineering requires 170 credits and cites me-programme-regulations, using search then fetch in 24 ms.">
+        </div>
+        <figcaption>Scored on 362 labelled questions over a seeded synthetic corpus.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="page" aria-labelledby="agents-title">
+    <div class="container">
+      <div class="head">
+        <h2 id="agents-title">Agents that know when to stop</h2>
+        <p class="lead">Each one is scored against labelled data, misses included.</p>
+      </div>
+      <div class="grid bento">
+        <figure class="shot lead-tile">
+          <div data-slot="support" data-kind="product" data-alt="Support chat for a phone repair shop" style="aspect-ratio: 420 / 560">
+            <img src="demos/support.webp" width="420" height="560" loading="lazy" alt="Chat: a price answer, an order status for QF-1001, then a handoff to staff for a question the bot was unsure about.">
+          </div>
+          <figcaption>A repair shop’s support bot on LangGraph. When unsure, it hands off to a person. <a href="https://github.com/SritarunLakkaraju/support-agent-langgraph" target="_blank" rel="noopener">support-agent-langgraph</a></figcaption>
+        </figure>
+        <figure class="shot t-invoice">
+          <div data-slot="invoice" data-kind="product" data-alt="Invoice review queue with flagged invoices" style="aspect-ratio: 850 / 420">
+            <img src="demos/invoice-review.webp" width="850" height="420" loading="lazy" alt="Review queue with six open invoices; one flagged because the total does not equal subtotal plus tax, one for a wrong GSTIN check digit.">
+          </div>
+          <figcaption>Invoice pipeline: 12 of 12 planted errors sent to review. <a href="https://github.com/SritarunLakkaraju/invoice-intelligence-pipeline" target="_blank" rel="noopener">invoice-intelligence-pipeline</a></figcaption>
+        </figure>
+        <figure class="shot t-chart">
+          <div data-slot="crewai" data-kind="product" data-alt="Weekly revenue chart from the CrewAI report" style="aspect-ratio: 840 / 384">
+            <img src="demos/crewai-weekly-revenue.webp" width="840" height="384" loading="lazy" alt="Line chart of weekly revenue from August to October, generated by the CrewAI report.">
+          </div>
+          <figcaption>CrewAI report. All 43 figures checked against SQL. <a href="https://github.com/SritarunLakkaraju/crewai-bigquery-reports" target="_blank" rel="noopener">crewai-bigquery-reports</a></figcaption>
+        </figure>
+        <figure class="shot t-log">
+          <pre class="log" aria-label="DealMind v2 evaluation output">brief quality
+  no memory   0.40
+  memory      1.00
+crash resume
+  LangGraph   2 calls
+  baseline    4 calls</pre>
+          <figcaption>DealMind v2 eval output. <a href="https://github.com/SritarunLakkaraju/dealmind-langgraph" target="_blank" rel="noopener">dealmind-langgraph</a></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="page case" aria-labelledby="ledger-title">
+    <div class="container grid">
+      <div class="head">
+        <h2 id="ledger-title">Every flagged payment explains itself</h2>
+      </div>
+      <p class="aside">LedgerLock matches orders, Razorpay settlements and bank rows. Built at the Razorpay Buildathon.</p>
+      <figure class="shot">
+        <div data-slot="ledger-case" data-kind="product" data-alt="LedgerLock exception drawer explaining a missing bank credit" style="aspect-ratio: 1280 / 800">
+          <img src="demos/ledgerlock-exception.webp" width="1280" height="800" loading="lazy" alt="Exception drawer for a payment missing in the bank: expected and actual amounts, settlement id, the rule that fired and the settlement rows behind it.">
+        </div>
+        <figcaption>Seed 42 gives the figures below; this screenshot is a fresh seed (96.9% matched). <a href="https://github.com/SritarunLakkaraju/ledgerlock" target="_blank" rel="noopener">ledgerlock</a></figcaption>
+      </figure>
+      <dl class="facts">
+        <div><dt>auto-matched, 300 synthetic orders</dt><dd>96.7%</dd></div>
+        <div><dt>false matches</dt><dd>0</dd></div>
+        <div><dt>pytest tests</dt><dd>51</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="page" aria-labelledby="index-title">
+    <div class="container grid">
+      <div class="index-head">
+        <h2 id="index-title">All nine projects</h2>
+      </div>
+      <div class="index-wrap">
+        <table>
+          <thead><tr><th scope="col">Project</th><th scope="col">Result</th><th scope="col">Code</th></tr></thead>
+          <tbody>
+            <tr><td>Agentic RAG Assistant</td><td class="num">98.3% answer accuracy</td><td><a href="https://github.com/SritarunLakkaraju/agentic-rag-adk" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>LedgerLock</td><td class="num">0 false matches</td><td><a href="https://github.com/SritarunLakkaraju/ledgerlock" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>Invoice Pipeline</td><td class="num">12 of 12 errors caught</td><td><a href="https://github.com/SritarunLakkaraju/invoice-intelligence-pipeline" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>CrewAI Weekly Report</td><td class="num">43 of 43 figures verified</td><td><a href="https://github.com/SritarunLakkaraju/crewai-bigquery-reports" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>DealMind v2</td><td class="num">brief quality 0.40 to 1.00</td><td><a href="https://github.com/SritarunLakkaraju/dealmind-langgraph" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>Support Agent</td><td class="num">47% held out, safe handoffs</td><td><a href="https://github.com/SritarunLakkaraju/support-agent-langgraph" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>HNSW Vector Search</td><td class="num">recall within 3 points of FAISS</td><td><a href="https://github.com/SritarunLakkaraju/hnsw-vector-search" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>DealMind</td><td class="num">HackWithHyderabad 3.0</td><td><a href="https://github.com/SritarunLakkaraju/dealmind" target="_blank" rel="noopener">GitHub</a></td></tr>
+            <tr><td>Budget Tracker (Flutter)</td><td class="num">per-user Firestore rules</td><td><a href="https://github.com/SritarunLakkaraju/budget-tracker" target="_blank" rel="noopener">GitHub</a></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="education" aria-labelledby="edu-title">
+    <div class="container grid">
+      <div class="rows-head">
+        <h2 id="edu-title">Where I studied</h2>
+      </div>
+      <ul class="rows">
+        <li><time>2025 to 2027</time><div><h3>Mahindra University, Hyderabad</h3><p>M.Tech, Artificial Intelligence and Data Science</p></div></li>
+        <li><time>2024 to 2025</time><div><h3>Daksh Gurukul, IIT Guwahati</h3><p>Micro-credit programme, Computer Science</p></div></li>
+        <li><time>2019 to 2023</time><div><h3>MVSR Engineering College, Hyderabad</h3><p>B.Tech, Computer Science and Engineering</p></div></li>
+        <li><time>Certificates</time><div><h3>Python, PostgreSQL and SQL</h3><p>Udemy, IIT Bombay, Oracle Academy</p></div></li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<section class="field close" id="resumes" aria-labelledby="resumes-title">
+  <div class="container grid">
+    <div class="head">
+      <h2 id="resumes-title">Resumes for three roles</h2>
+      <p class="lead">Each leads with the projects that role cares about.</p>
+    </div>
+    <ul class="resume-list">
+      <li><a href="resumes/Sritarun_Lakkaraju_GenAI_LLM_Engineer_Resume.pdf" target="_blank" rel="noopener">Generative AI and LLM Engineer <small>PDF</small></a></li>
+      <li><a href="resumes/Sritarun_Lakkaraju_Full_Stack_Developer_Resume.pdf" target="_blank" rel="noopener">Full Stack Developer <small>PDF</small></a></li>
+      <li><a href="resumes/Sritarun_Lakkaraju_Mobile_App_Developer_Resume.pdf" target="_blank" rel="noopener">Mobile App Developer <small>PDF</small></a></li>
+    </ul>
+    <div class="contact">
+      <a class="email" href="mailto:lakkarajusri17@gmail.com">lakkarajusri17@gmail.com</a>
+    </div>
+  </div>
+</section>
+
+<footer class="field mast">
+  <div class="container">
+    <div class="name">Sritarun Lakkaraju</div>
+    <ul>
+      <li><a href="https://github.com/SritarunLakkaraju" target="_blank" rel="noopener">GitHub</a></li>
+      <li><a href="https://www.linkedin.com/in/sritarun-lakkaraju" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li><a href="mailto:lakkarajusri17@gmail.com">Email</a></li>
+    </ul>
+    <p>Screens and figures come from local runs on synthetic, seeded data.</p>
+  </div>
+</footer>
+
+<script>window.hallmarkSlots = (m) => { for (const [k, v] of Object.entries(m)) { const s = document.querySelector(`[data-slot="${k}"]`); if (!s) continue; const im = new Image(); im.src = typeof v === 'string' ? v : v.src; im.alt = (typeof v === 'object' && v.alt) || s.dataset.alt || ''; s.querySelectorAll(':scope > img').forEach((o) => o.remove()); s.prepend(im); } };
+document.querySelectorAll('[data-slot] img').forEach((i) => { if (i.complete && !i.naturalWidth) i.remove(); else i.addEventListener('error', () => i.remove(), { once: true }); });</script>
+</body>
+</html>
