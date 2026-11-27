@@ -198,8 +198,23 @@
   };
   const base = {};
   ['p1', 'p2', 'p3'].forEach((k) => { if (H[k]) base[k] = parseFloat(getComputedStyle(H[k]).opacity) || 1; });
+  const wideHero = matchMedia('(min-width: 861px)');
   const isPinned = () => hero && getComputedStyle(hero).position === 'sticky';
   let heroPinned = false, heroP = 0, veilK = 1;
+  // The landing plays its opening by itself: a ~1 s boot log on the veil, the veil clears,
+  // then the desk, the name and the intro arrive (hero progress 0 -> INTRO_END over ~3.4 s).
+  // Scrolling continues from there, so the visitor never lands on an empty screen.
+  const INTRO_END = 0.34;
+  const introT0 = performance.now();
+  const introAt = (t) => {
+    const s = (t - introT0) / 1000;
+    if (s < 1.0) return 0;
+    if (s < 1.6) return 0.14 * easeOut((s - 1.0) / 0.6);
+    return Math.min(INTRO_END, 0.14 + (INTRO_END - 0.14) * easeOut(Math.min(1, (s - 1.6) / 1.8)));
+  };
+  let introP = 0;
+  const heroDraw = (scrollP) => Math.min(1, introP + scrollP * (1 - INTRO_END));
+  const scrollFor = (drawP) => Math.max(0, (drawP - INTRO_END) / (1 - INTRO_END));
   const tf = (el, s) => { if (el) el.style.transform = s; };
   const op = (el, v) => { if (el) el.style.opacity = v.toFixed(3); };
   const two = (n) => String(Math.floor(n)).padStart(2, '0');
@@ -219,23 +234,26 @@
     tf(H.p2, `translate3d(${lerp(6, 0, settle).toFixed(2)}vw,${(lerp(22, 0, settle) - p * 10 - exit * 30).toFixed(2)}vh,0) scale(${lerp(1.08, 1, settle).toFixed(4)})`);
     const near = easeOut(range(p, 0.1, 0.55));
     tf(H.p3, `translate3d(0,${(lerp(44, 0, near) - exit * 60).toFixed(2)}vh,0) rotate(${lerp(-3, 0, near).toFixed(2)}deg)`);
+    const k3 = window.__hero3d ? 0.4 : 1; // with the 3D desk on screen the flat panels step back
     if (H.p1) op(H.p1, base.p1 * fadeIn * (1 - exit * 0.7));
-    if (H.p2) op(H.p2, base.p2 * fadeIn * (1 - exit * 0.7));
-    if (H.p3) op(H.p3, base.p3 * range(p, 0.1, 0.3) * (1 - exit * 0.7) * (1 - range(p, 0.5, 0.6) * 0.5));
+    if (H.p2) op(H.p2, k3 * base.p2 * fadeIn * (1 - exit * 0.7));
+    if (H.p3) op(H.p3, k3 * base.p3 * range(p, 0.1, 0.3) * (1 - exit * 0.7) * (1 - range(p, 0.5, 0.6) * 0.5));
+    if (window.__hero3d) window.__hero3d.canvas.style.opacity = (1 - range(p, 0.63, 0.7)).toFixed(3);
 
     // title resolves: tracking closes in, blur clears; then it yields to the results
-    const tIn = easeOut(range(p, 0.1, 0.26)), tOut = range(p, 0.46, 0.56);
+    const tIn = easeOut(range(p, 0.1, 0.26)), tOut = range(p, 0.44, 0.52);
     op(H.title, tIn * (1 - tOut));
     tf(H.title, `translate3d(0,${(-p * 6 - tOut * 6).toFixed(2)}vh,0)`);
-    if (H.big) H.big.style.letterSpacing = lerp(0.7, 0.24, tIn).toFixed(4) + 'em';
+    const ls = wideHero.matches ? 0.16 : 0.24; // left-aligned beside the 3D desk on wide screens
+    if (H.big) H.big.style.letterSpacing = lerp(ls + 0.46, ls, tIn).toFixed(4) + 'em';
     if (H.title) H.title.style.filter = tIn < 0.99 ? `blur(${((1 - tIn) * 6).toFixed(2)}px)` : '';
 
-    const cIn = easeOut(range(p, 0.2, 0.32)), cOut = range(p, 0.46, 0.56);
+    const cIn = easeOut(range(p, 0.2, 0.32)), cOut = range(p, 0.44, 0.52);
     op(H.copy, cIn * (1 - cOut));
     tf(H.copy, `translate3d(0,${((1 - cIn) * 30 - cOut * 40).toFixed(1)}px,0)`);
     hero.classList.toggle('copy-off', cIn * (1 - cOut) < 0.5);
 
-    const rIn = easeOut(range(p, 0.54, 0.66)), rOut = range(p, 0.86, 0.97);
+    const rIn = easeOut(range(p, 0.58, 0.68)), rOut = range(p, 0.86, 0.97);
     op(H.results, rIn * (1 - rOut));
     tf(H.results, `translate3d(0,${((1 - rIn) * 50 - rOut * 60).toFixed(1)}px,0) scale(${lerp(0.96, 1, rIn).toFixed(4)})`);
     hero.classList.toggle('results-on', rIn * (1 - rOut) > 0.5);
@@ -250,8 +268,8 @@
     hero.addEventListener('focusin', (e) => {
       if (!heroPinned) return;
       const P = pins.hero, span = P.h - vh;
-      if (H.results && H.results.contains(e.target) && !hero.classList.contains('results-on')) scrollToY(P.top + span * 0.74, 0.9);
-      else if (H.copy && H.copy.contains(e.target) && hero.classList.contains('copy-off')) scrollToY(P.top + span * 0.38, 0.9);
+      if (H.results && H.results.contains(e.target) && !hero.classList.contains('results-on')) scrollToY(P.top + span * scrollFor(0.74), 0.9);
+      else if (H.copy && H.copy.contains(e.target) && hero.classList.contains('copy-off')) scrollToY(P.top + span * scrollFor(0.38), 0.9);
     });
   }
 
@@ -393,6 +411,11 @@
   // ---------------------------------------------------------------- cursor follower
   let cursor = null;
   const cur = { x: -100, y: -100, tx: -100, ty: -100, on: false };
+  const ptr = { x: 0, y: 0 }; // pointer, -0.5..0.5, for the 3D desk's tilt
+  if (motion && finePointer) {
+    addEventListener('pointermove', (e) => { ptr.x = e.clientX / innerWidth - 0.5; ptr.y = e.clientY / innerHeight - 0.5; }, { passive: true });
+    document.addEventListener('pointerleave', () => { ptr.x = 0; ptr.y = 0; });
+  }
   if (motion && finePointer) {
     cursor = document.createElement('div');
     cursor.className = 'cursor';
@@ -416,11 +439,12 @@
     const dt = lastT ? Math.min(0.1, (t - lastT) / 1000) : 1 / 60;
     lastT = t;
     const y = lenis ? lenis.scroll : scrollY;
+    if (motion && introP < INTRO_END) { introP = introAt(t); dirty = true; }
     if (y !== lastY || dirty) {
       lastY = y; dirty = false;
       drawChrome(y);
       if (motion) {
-        if (heroPinned) drawHero(prog(pins.hero, y));
+        if (heroPinned) drawHero(heroDraw(prog(pins.hero, y)));
         if (pins.pipe && pinnedNow.pipe && y > pins.pipe.top - vh && y < pins.pipe.top + pins.pipe.h) drawPipe(prog(pins.pipe, y));
         if (pins.reel && pinnedNow.reel && y > pins.reel.top - vh && y < pins.reel.top + pins.reel.h) drawReel(prog(pins.reel, y));
         drawParallax(y);
@@ -428,6 +452,8 @@
     }
     // glyphs drift continuously, but only while the hero is on screen and the tab is visible
     if (motion && glyph.ctx && pins.hero && y < pins.hero.top + pins.hero.h) drawGlyphs(t, false);
+    // the 3D desk renders only while it can be seen (it fades out as the camera enters the screen)
+    if (window.__hero3d && heroPinned && heroP < 0.71) window.__hero3d.frame(t, heroP, ptr.x, ptr.y);
     if (cursor && cur.on) {
       const k = 1 - Math.exp(-dt * 16); // frame-rate independent smoothing
       cur.x += (cur.tx - cur.x) * k; cur.y += (cur.ty - cur.y) * k;
